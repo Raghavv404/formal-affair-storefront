@@ -28,7 +28,10 @@ interface AddAddressFormProps {
   onSave: (addressData: Omit<Address, "id" | "isDefault">) => void;
 }
 
-// Updated Zod validation schema with strict rules
+type AddressFormData = Omit<Address, "id" | "isDefault">;
+type AddressField = keyof AddressFormData;
+
+// Zod validation schema with strict rules
 const addressSchema = z.object({
   name: z
     .string()
@@ -46,8 +49,6 @@ const addressSchema = z.object({
   state: z.string().min(1, "State is required"),
   address: z.string().min(10, "Address must be at least 10 characters"),
 });
-
-type AddressFormData = z.infer<typeof addressSchema>;
 
 // Floating Label Input Component with enhanced features
 interface FloatingLabelInputProps {
@@ -93,7 +94,7 @@ const FloatingLabelInput = ({
         value={value}
         onChange={onChange}
         onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
+        onBlur={() => {
           setIsFocused(false);
           if (onBlur) onBlur();
         }}
@@ -156,8 +157,8 @@ const AddAddressForm = ({
     pincode: "",
   });
 
-  const [errors, setErrors] = useState<Partial<Record<keyof AddressFormData, string>>>({});
-  const [touched, setTouched] = useState<Partial<Record<keyof AddressFormData, boolean>>>({});
+  const [errors, setErrors] = useState<Partial<Record<AddressField, string>>>({});
+  const [touched, setTouched] = useState<Partial<Record<AddressField, boolean>>>({});
   const [isCheckingPincode, setIsCheckingPincode] = useState(false);
   const [pincodeVerified, setPincodeVerified] = useState(false);
   const [cityStateEditable, setCityStateEditable] = useState(false);
@@ -201,11 +202,11 @@ const AddAddressForm = ({
       if (formData.pincode.length === 6 && /^\d{6}$/.test(formData.pincode)) {
         setIsCheckingPincode(true);
         setPincodeVerified(false);
-        
+
         try {
           const response = await fetch(`https://api.postalpincode.in/pincode/${formData.pincode}`);
           const data = await response.json();
-          
+
           if (data && data[0] && data[0].Status === "Success" && data[0].PostOffice && data[0].PostOffice.length > 0) {
             const postOffice = data[0].PostOffice[0];
             setFormData(prev => ({
@@ -260,7 +261,7 @@ const AddAddressForm = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    
+
     // For name field - only allow letters and spaces
     if (name === "name") {
       const lettersOnly = value.replace(/[^a-zA-Z\s]/g, "");
@@ -276,7 +277,7 @@ const AddAddressForm = ({
     else if (name === "phone" || name === "pincode") {
       const numericValue = value.replace(/\D/g, "");
       setFormData((prev) => ({ ...prev, [name]: numericValue }));
-      
+
       // Validate phone immediately
       if (name === "phone" && numericValue.length > 0) {
         if (numericValue.length === 10) {
@@ -294,14 +295,14 @@ const AddAddressForm = ({
     }
 
     // Clear error when user starts typing (except for name which is handled above)
-    if (name !== "name" && errors[name as keyof AddressFormData]) {
+    if (name !== "name" && errors[name as AddressField]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
   };
 
-  const handleBlur = (field: keyof AddressFormData) => {
+  const handleBlur = (field: AddressField) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
-    
+
     // Validate individual field on blur
     const fieldSchema = addressSchema.shape[field];
     if (fieldSchema) {
@@ -330,9 +331,9 @@ const AddAddressForm = ({
     // Validate all fields
     const result = addressSchema.safeParse(formData);
     if (!result.success) {
-      const fieldErrors: Partial<Record<keyof AddressFormData, string>> = {};
+      const fieldErrors: Partial<Record<AddressField, string>> = {};
       result.error.errors.forEach((err) => {
-        const field = err.path[0] as keyof AddressFormData;
+        const field = err.path[0] as AddressField;
         fieldErrors[field] = err.message;
       });
       setErrors(fieldErrors);
