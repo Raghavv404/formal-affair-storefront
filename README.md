@@ -2,7 +2,7 @@
 
 An editorial e-commerce storefront for **Formal Affair**, a luxury women's formalwear startup I co-founded with my sister. Built with React, TypeScript, and Tailwind CSS.
 
-🔗 **Live site:** [Add deployed URL once live]  
+🔗 **Live site:** [https://www.theformalaffair.com/]  
 📷 **Brand community:** [@herweekendhobbies](https://www.instagram.com/herweekendhobbies/)
 
 ## About the Project
