@@ -1,8 +1,8 @@
 {
-    "rewrites": [
-      {
-        "source": "/(.*)",
-        "destination": "/index.html"
-      }
-    ]
-  }
+  "rewrites": [
+    {
+      "source": "/((?!logo.jpeg|assets/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
