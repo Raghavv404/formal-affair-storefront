@@ -1,0 +1,298 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Luxury Ivory/Beige Theme */
+    --background: 40 33% 96%; /* #F8F6F2 */
+    --foreground: 0 0% 10%; /* #1A1A1A */
+
+    --card: 40 33% 98%;
+    --card-foreground: 0 0% 10%;
+
+    --popover: 40 33% 98%;
+    --popover-foreground: 0 0% 10%;
+
+    /* Deep Burgundy Primary */
+    --primary: 355 61% 30%; /* #7A1F27 */
+    --primary-foreground: 40 33% 96%;
+
+    --secondary: 40 20% 92%;
+    --secondary-foreground: 0 0% 10%;
+
+    --muted: 40 15% 90%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 355 50% 35%;
+    --accent-foreground: 40 33% 96%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 355 61% 30%;
+
+    --radius: 0.25rem;
+
+    /* Custom luxury tokens */
+    --ivory: 40 33% 96%;
+    --charcoal: 0 0% 10%;
+    --burgundy: 355 61% 30%;
+    --burgundy-light: 355 50% 40%;
+    --burgundy-dark: 355 65% 22%;
+    --cream: 40 40% 94%;
+    --warm-gray: 30 10% 70%;
+
+    /* Sidebar */
+    --sidebar-background: 40 33% 96%;
+    --sidebar-foreground: 0 0% 10%;
+    --sidebar-primary: 355 61% 30%;
+    --sidebar-primary-foreground: 40 33% 96%;
+    --sidebar-accent: 40 20% 92%;
+    --sidebar-accent-foreground: 0 0% 10%;
+    --sidebar-border: 40 20% 88%;
+    --sidebar-ring: 355 61% 30%;
+  }
+
+  .dark {
+    --background: 0 0% 8%;
+    --foreground: 40 33% 96%;
+
+    --card: 0 0% 12%;
+    --card-foreground: 40 33% 96%;
+
+    --popover: 0 0% 12%;
+    --popover-foreground: 40 33% 96%;
+
+    --primary: 355 50% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 40 33% 96%;
+
+    --muted: 0 0% 18%;
+    --muted-foreground: 40 20% 70%;
+
+    --accent: 355 45% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 355 50% 45%;
+
+    --sidebar-background: 0 0% 10%;
+    --sidebar-foreground: 40 33% 96%;
+    --sidebar-primary: 355 50% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 16%;
+    --sidebar-accent-foreground: 40 33% 96%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 355 50% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply relative inline-block text-sm tracking-widest uppercase transition-colors duration-300;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute left-0 bottom-0 w-full h-px bg-foreground scale-x-0 origin-right transition-transform duration-300;
+  }
+
+  .nav-link:hover::after {
+    @apply scale-x-100 origin-left;
+  }
+
+  .hero-text {
+    @apply font-serif text-4xl md:text-6xl lg:text-7xl font-normal tracking-tight leading-tight;
+  }
+
+  .section-heading {
+    @apply font-serif text-3xl md:text-4xl lg:text-5xl font-normal tracking-tight;
+  }
+
+  .body-text {
+    @apply font-sans text-base leading-relaxed tracking-wide;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground px-8 py-3 text-sm tracking-widest uppercase font-sans transition-all duration-300 hover:bg-burgundy-dark;
+  }
+
+  .btn-outline {
+    @apply border border-foreground text-foreground px-8 py-3 text-sm tracking-widest uppercase font-sans transition-all duration-300 hover:bg-foreground hover:text-background;
+  }
+
+  .btn-hero {
+    @apply bg-background/90 text-foreground backdrop-blur-sm px-8 py-3.5 text-sm tracking-widest uppercase font-sans transition-all duration-300 hover:bg-background border border-foreground/20;
+  }
+
+  .product-card {
+    @apply cursor-pointer;
+  }
+
+  .product-card-image {
+    @apply overflow-hidden bg-cream;
+  }
+
+  /* Crop watermark from product images */
+  .product-card-image img,
+  .product-image-cropped,
+  .product-thumbnail img {
+    clip-path: inset(0 0 7% 0);
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .fade-in {
+    animation: fadeIn 1s ease-out forwards;
+  }
+
+  .slide-in-right {
+    animation: slideInRight 0.5s ease-out forwards;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .animation-delay-600 {
+    animation-delay: 600ms;
+  }
+
+  .animation-delay-800 {
+    animation-delay: 800ms;
+  }
+}
+
+/* Keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 hsl(var(--primary) / 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px hsl(var(--primary) / 0.2);
+  }
+}
+
+/* Animation utility classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.1), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--foreground));
+}
