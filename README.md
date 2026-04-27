@@ -26,7 +26,7 @@ My philosophy for this build was to move fast on boilerplate and invest heavy en
 
 * **Frontend:** React, TypeScript, Vite
 * **Styling:** Tailwind CSS, shadcn/ui
-* **Deployment:** [Vercel / Netlify / etc.]
+* **Deployment:** [Vercel]
 
 ## Running Locally
 
